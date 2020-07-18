@@ -1,0 +1,12 @@
+---
+- name: Install Docker
+  pacman:
+    name: docker
+    state: present
+  become: "{{ k3s_become_for_package_install | ternary(true, false, k3s_become_for_all) }}"
+- name: Start Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  become: "{{ k3s_become_for_package_install | ternary(true, false, k3s_become_for_all) }}"
